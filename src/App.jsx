@@ -4,6 +4,7 @@ import "./App.css"
 import Input from "./components/Input"
 
 function App() {
+	// Estado para armazenar todos os dados
 	const [formData, setFormData] = useState({
 		cep: "",
 		estado:"",
@@ -13,12 +14,18 @@ function App() {
 		complemento: "",
 	})
 
+	/**
+   	* Funcao para buscar CEP na API ViaCEP
+   	* Valida os campos obrigatorios antes de fazer a consulta
+   	*/
 	const handleBuscarCEP = async () => {
-		// Valida Número (obrigatório, mínimo 1 caractere)
+		// Valida se o campo numero esta preenchido
   		if (!formData.numero || formData.numero.trim().length === 0) {
     		alert("Número é obrigatório");
+			return;  // Para a execucao se houver erro
   		}
-  		try {
+  		try { 
+			// Busca o CEP na API e atualiza os campos de endereco
     		const dados = await buscarCEP(formData.cep)
     		setFormData({
       			...formData,
@@ -26,14 +33,18 @@ function App() {
       			cidade: dados.localidade,
       			estado: dados.uf
     		})
+			// Captura e exibe erros de validacao ou conexao
   		} catch (erro) {
     		alert(erro.message)
   		}
 	}
 
-	// Funcao para atualizar os campos
+	/**
+   	* Atualiza os valores dos campos do formulario
+   	* Aplica mascara automaticamente no campo CEP
+   	*/
 	const handleChange = (campo, valor) => {
-		// Se campo CEL, aplica mascara
+		// Se campo CEP, aplica mascara
 		if(campo === "cep") {
 			valor = formatarCEP(valor)
 		}
