@@ -14,6 +14,10 @@ function App() {
 	})
 
 	const handleBuscarCEP = async () => {
+		// Valida Número (obrigatório, mínimo 1 caractere)
+  		if (!formData.numero || formData.numero.trim().length === 0) {
+    		alert("Número é obrigatório");
+  		}
   		try {
     		const dados = await buscarCEP(formData.cep)
     		setFormData({
