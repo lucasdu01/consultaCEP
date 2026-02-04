@@ -1,6 +1,6 @@
 import "./index.css"
 
-function Input({ label, id, type="text", disabled=false, required=false, value, onChange }) {
+function Input({ label, id, type="text", disabled=false, required=false, value, onChange, placeholder }) {
 	return(
 		<div className="input-group">
 			<label htmlFor={id}>{label}</label>
@@ -11,6 +11,7 @@ function Input({ label, id, type="text", disabled=false, required=false, value, 
 				required={required}
 				value={value}
 				onChange={onChange}
+				placeholder={placeholder}
 			/>
 		</div>
 	)

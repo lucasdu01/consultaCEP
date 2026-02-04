@@ -1,8 +1,31 @@
+import { useState } from "react"
+import { formatarCEP } from './utils/utils'
 import "./App.css"
-import "./components/Input"
 import Input from "./components/Input"
 
 function App() {
+	const [formData, setFormData] = useState({
+		cep: "",
+		estado:"",
+		cidade: "",
+		logradouro: "",
+		numero: "",
+		complemento: "",
+	})
+
+	// Funcao para atualizar os campos
+	const handleChange = (campo, valor) => {
+		// Se campo CEL, aplica mascara
+		if(campo === "cep") {
+			valor = formatarCEP(valor)
+		}
+		setFormData({
+			...formData, // Mantem o valor dos demais campos
+			[campo]: valor // Atualiza o campo especifico
+		})
+	}
+
+
   return (
       <div id="container"> 
 	  	<form>
@@ -12,38 +35,47 @@ function App() {
 				label="CEP"
 				input="cep"
 				required
+				value={formData.cep}
+				onChange={(e) => handleChange("cep", e.target.value)}
+				placeholder="00000-000"
 			/>
 
 			<Input
 				label="Estado"
 				input="estado"
 				disabled
+				value={formData.estado}
 			/>
 
 			<Input
 				label="Cidade"
 				input="cidade"
 				disabled
+				value={formData.cidade}
 			/>
 
 			<Input
 				label="Logradouro"
 				input="logradouro"
 				disabled
+				value={formData.logradouro}
 			/>
 
 			<Input
 				label="Número"
 				input="numero"
 				required
+				value={formData.numero}
+				onChange={(e) => handleChange("numero", e.target.value)}
 			/>
 
 			<Input
 				label="Complemento"
 				input="complemento"
+				value={formData.complemento}
+				onChange={(e) => handleChange("complemento", e.target.value)}
+				placeholder="Ex.: Ao lado do posto."
 			/>
-
-
 
 			<button>Buscar CEP</button>
 		</form>
