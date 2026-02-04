@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { formatarCEP } from './utils/utils'
+import { formatarCEP, buscarCEP } from "./utils/utils"
 import "./App.css"
 import Input from "./components/Input"
 
@@ -12,6 +12,20 @@ function App() {
 		numero: "",
 		complemento: "",
 	})
+
+	const handleBuscarCEP = async () => {
+  		try {
+    		const dados = await buscarCEP(formData.cep)
+    		setFormData({
+      			...formData,
+      			logradouro: dados.logradouro,
+      			cidade: dados.localidade,
+      			estado: dados.uf
+    		})
+  		} catch (erro) {
+    		alert(erro.message)
+  		}
+	}
 
 	// Funcao para atualizar os campos
 	const handleChange = (campo, valor) => {
@@ -77,7 +91,7 @@ function App() {
 				placeholder="Ex.: Ao lado do posto."
 			/>
 
-			<button>Buscar CEP</button>
+			<button  type="button" onClick={handleBuscarCEP}>Buscar CEP</button>
 		</form>
 	  </div>
   )
