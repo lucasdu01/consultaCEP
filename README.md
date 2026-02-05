@@ -48,45 +48,52 @@ npm run dev
 ```
 
 ## Estrutura do Projeto
+```
 consultaCep/
 ├── src/
 │   ├── components/
-│   │   └── Input/          # Componente reutilizável de input
+│   │   └── Input/              # Componente reutilizável de input
 │   │       ├── index.jsx
 │   │       └── index.css
 │   ├── hooks/
-│   │   └── useFormularioCep.js  # Hook customizado
+│   │   └── useFormularioCep.js # Hook customizado para lógica do formulário
 │   ├── utils/
-│   │   └── utils.js        # Funções utilitárias
-│   ├── App.jsx             # Componente principal
-│   ├── App.css             # Estilos globais
-│   └── main.jsx            # Ponto de entrada
+│   │   └── utils.js            # Funções utilitárias (formatação e API)
+│   ├── App.jsx                 # Componente principal
+│   ├── App.css                 # Estilos globais
+│   ├── index.css               # Estilos base
+│   └── main.jsx                # Ponto de entrada da aplicação
 ├── public/
 ├── index.html
 ├── package.json
+├── vite.config.js
 └── README.md
+```
 
 ##  Decisões Técnicas
 
-- **Por que React?**
- - Componentização facilita reutilização e manutenção
+### Por que React?
+- Componentização facilita reutilização e manutenção
 
-- **Por que Custom Hook?**
- - Separação de responsabilidades
- - Lógica reutilizável
- - Código mais limpo
-
-- **Por que Vite?**
+### Por que Vite?
  - Build otimizado
  - Configuração mínima
 
+### Por que Custom Hook?
+- Separação de responsabilidades
+- Lógica reutilizável
+- Código mais limpo
+
  ##  Validações Implementadas
+ 
+### CEP
+- Formato obrigatório (8 dígitos)
+- Máscara automática (00000-000)
+- Validação em tempo real enquanto digita
+- Mensagem de erro se não encontrado na API
+- Limpeza automática de campos se CEP inválido
 
-- **CEP**
- - Formato obrigatório (8 dígitos)
- - Validação em tempo real
- - Mensagem de erro se não encontrado
-
-- **Número**
- - Campo obrigatório
- - Mínimo 1 caractere
+### Número
+- Campo obrigatório
+- Mínimo 1 caractere
+- Validação ao submeter formulário
