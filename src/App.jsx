@@ -92,10 +92,48 @@ function App() {
 		}))
 	}
 
+	/**
+	 * Valida todos os campos obrigatórios do formulário
+	 * @returns {boolean} true se válido, false se houver erros
+	 */
+	const validarFormulario = () => {
+		const novosErros = {}
+	
+		// Valida CEP obrigatório
+		if (!formData.cep || formData.cep.trim().length === 0) {
+			novosErros.cep = 'Campo obrigatório'
+		}
+	
+		// Valida Número obrigatório (mínimo 1 caractere)
+		if (!formData.numero || formData.numero.trim().length === 0) {
+			novosErros.numero = 'Campo obrigatório'
+		}
+	
+		// Atualiza o estado de erros
+		setErros(novosErros)
+	
+		// Retorna true se não houver erros
+		return Object.keys(novosErros).length === 0
+	}
 
+	/**
+ 	* Função chamada ao clicar em "Enviar Formulário"
+ 	* Valida e processa os dados do formulário
+ 	*/
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		if(validarFormulario()) {
+			console.log(" Formulário válido!")
+    		console.log("Dados:", formData)
+    
+    		alert("Formulário enviado com sucesso!")
+		} else {
+			console.log("Formulário invalido - verifique os campos")
+		}
+	}
   return (
       <div id="container"> 
-	  	<form>
+	  	<form onSubmit={handleSubmit} noValidate>
 			<h1>Consulta de CEP</h1>
 
 			<Input
@@ -146,7 +184,7 @@ function App() {
 				placeholder="Ex.: Ao lado do posto."
 			/>
 
-			<button  type="button">Enviar Formulário</button>
+			<button  type="submit">Enviar Formulário</button>
 		</form>
 	  </div>
   )
