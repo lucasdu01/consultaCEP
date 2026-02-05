@@ -132,7 +132,7 @@ export const useFormularioCep = () => {
      * Valida todos os campos obrigatórios do formulário
      * 
      * Campos validados:
-     * - CEP: obrigatório
+     * - CEP: obrigatório e válido
      * - Número: obrigatório, mínimo 1 caractere
      * 
      * @returns {boolean} true se todos os campos são válidos, false caso contrário
@@ -149,6 +149,11 @@ export const useFormularioCep = () => {
 		if (!formData.numero || formData.numero.trim().length === 0) {
 			novosErros.numero = 'Campo obrigatório'
 		}
+		
+		// Valida se há erro de CEP no estado (CEP não encontrado na API)
+		if (erros.cep) {
+    		novosErros.cep = erros.cep
+  		}
 	
 		// Atualiza o estado de erros
 		setErros(novosErros)
