@@ -26,16 +26,14 @@ export function formatarCEP(valor) {
  * @returns {Promise<Object>} Objeto com dados do endereço (logradouro, localidade, uf, etc)
  */
 export async function buscarCEP(cep) {
-	// Remove hifen
-	const cepLimpo = cep.replace(/\D/g, "")
 
 	// Valida se tem 8 digitos
-	if(cepLimpo.length != 8) {
+	if(cep.length != 8) {
 		throw new Error("CEP deve ter 8 dígitos")
 	}
 
 	// Faz a requisicao para a API e armazena a resposta
-	const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json`)
+	const response = await fetch(`https://viacep.com.br/ws/${cep}/json`)
 	// Converte a resposta em um objeto e armazena os dados
 	const dados = await response.json()
 

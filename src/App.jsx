@@ -14,7 +14,17 @@ function App() {
 		complemento: "",
 	})
 
+	// Estado para armazenar mensagens de erro
 	const [erros, setErros] = useState({})
+
+	// Função auxiliar para limpar erro
+	const limparErro = (campo) => {
+		setErros(prev => {
+			const novosErros = { ...prev }
+			delete novosErros[campo]
+			return novosErros
+		})
+	}
 
 	useEffect(() => {
 		// Busca automaticamente quando o CEP tiver 8 dígitos
@@ -30,22 +40,17 @@ function App() {
       			return
     		}
 
-			// Limpa erro se estiver vazio ou completo
+			// Limpa erro se estiver vazio
 			if (cepLimpo.length === 0) {
-				setErros(prev => ({
-					...prev,
-					cep: undefined
-				}))
+				limparErro('cep')
 			}
 			
 			if(cepLimpo.length === 8) {
-				setErros(prev => ({
-					...prev,
-					cep: undefined
-				}))
+				// Limpa erro temporariamente
+				limparErro('cep')
 
 				try { 
-					const dados = await buscarCEP(formData.cep)
+					const dados = await buscarCEP(cepLimpo)
 					setFormData(prev => ({
 						...prev,
 						logradouro: dados.logradouro,
@@ -54,10 +59,18 @@ function App() {
 					}))
 				} catch (erro) {
 					console.error(erro.message)
+
         			setErros(prev => ({
           				...prev,
           				cep: "CEP inválido"
         			}))
+
+					setFormData(prev => ({
+						...prev,
+						estado: "",
+						cidade: "",
+						logradouro: "",
+					}))
 				}
 			}
   		}
