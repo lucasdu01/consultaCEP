@@ -2,6 +2,33 @@
 
 Aplicação web para consulta de endereços através do CEP, utilizando a API ViaCEP.
 
+## Como Usar
+
+### 1. Consultando um CEP
+
+1. Digite o CEP no campo "CEP" (apenas números)
+2. A máscara será aplicada automaticamente (00000-000)
+3. Quando o CEP estiver completo (8 dígitos), a busca será feita automaticamente
+4. Os campos **Estado**, **Cidade** e **Logradouro** serão preenchidos automaticamente
+
+### 2. Preenchendo o endereço completo
+
+1. Após a busca automática do CEP, preencha o campo **Número** (obrigatório)
+2. Opcionalmente, preencha o campo **Complemento** (ex: "Apto 101", "Bloco B")
+
+### 3. Enviando o formulário
+
+1. Clique no botão **"Enviar Formulário"**
+2. Se todos os campos obrigatórios estiverem preenchidos, verá uma mensagem de sucesso
+3. Caso contrário, mensagens de erro aparecerão abaixo dos campos problemáticos
+
+### Dicas
+
+- **CEP inválido ou incompleto**: Uma mensagem "CEP inválido" aparecerá em vermelho abaixo do campo
+- **Campos obrigatórios vazios**: Ao tentar enviar, aparecerá "Campo obrigatório" em vermelho
+- **CEP não encontrado**: Se a API não encontrar o CEP, aparecerá "CEP inválido"
+- **Limpeza automática**: Se digitar um CEP inválido após um válido, os campos de endereço serão limpos automaticamente
+
 ## Tecnologias Utilizadas
 
 - **React**
