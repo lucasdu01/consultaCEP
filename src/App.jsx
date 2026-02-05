@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { formatarCEP, buscarCEP } from "./utils/utils"
 import "./App.css"
 import Input from "./components/Input"
@@ -14,30 +14,25 @@ function App() {
 		complemento: "",
 	})
 
-	/**
-   	* Funcao para buscar CEP na API ViaCEP
-   	* Valida os campos obrigatorios antes de fazer a consulta
-   	*/
-	const handleBuscarCEP = async () => {
-		// Valida se o campo numero esta preenchido
-  		if (!formData.numero || formData.numero.trim().length === 0) {
-    		alert("Número é obrigatório");
-			return;  // Para a execucao se houver erro
+	useEffect(() => {
+		// Busca automaticamente quando o CEP tiver 8 dígitos
+  		const buscarCEPAutomatico = async () => {
+			if(formData.cep.replace(/\D/g, '').length === 8) {
+				try { 
+					const dados = await buscarCEP(formData.cep)
+					setFormData(prev => ({
+						...prev,
+						logradouro: dados.logradouro,
+						cidade: dados.localidade,
+						estado: dados.uf
+					}))
+				} catch (erro) {
+					console.error(erro.message)
+				}
+			}
   		}
-  		try { 
-			// Busca o CEP na API e atualiza os campos de endereco
-    		const dados = await buscarCEP(formData.cep)
-    		setFormData({
-      			...formData,
-      			logradouro: dados.logradouro,
-      			cidade: dados.localidade,
-      			estado: dados.uf
-    		})
-			// Captura e exibe erros de validacao ou conexao
-  		} catch (erro) {
-    		alert(erro.message)
-  		}
-	}
+		buscarCEPAutomatico()
+	}, [formData.cep])
 
 	/**
    	* Atualiza os valores dos campos do formulario
@@ -106,7 +101,7 @@ function App() {
 				placeholder="Ex.: Ao lado do posto."
 			/>
 
-			<button  type="button" onClick={handleBuscarCEP}>Buscar CEP</button>
+			<button  type="button">Buscar CEP</button>
 		</form>
 	  </div>
   )
