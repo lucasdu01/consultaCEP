@@ -1,18 +1,92 @@
-# React + Vite
+# Consulta de CEP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web para consulta de endereços através do CEP, utilizando a API ViaCEP.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React**
+- **Vite**
+- **JavaScript**
+- **CSS3**
+- **API ViaCEP**
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Busca automática de endereço ao digitar CEP completo
+- Máscara de formatação para CEP (00000-000)
+- Validação de campos obrigatórios (CEP e Número)
+- Mensagens de erro personalizadas
+- Campos de endereço desabilitados (preenchidos automaticamente)
+- Componentes reutilizáveis
+- Custom Hook para lógica de formulário
 
-Note: This will impact Vite dev & build performances.
+## Pré-requisitos
 
-## Expanding the ESLint configuration
+- Node.js (versão 16 ou superior)
+- npm ou yarn
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Como Rodar o Projeto
+
+1. Clone o repositório:
+```bash
+git clone [URL_DO_SEU_REPOSITORIO]
+cd consultaCep
+```
+2. Instale as dependências:
+```bash
+npm install
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Rode o projeto:
+```bash
+npm run dev
+```
+
+## Estrutura do Projeto
+consultaCep/
+├── src/
+│   ├── components/
+│   │   └── Input/          # Componente reutilizável de input
+│   │       ├── index.jsx
+│   │       └── index.css
+│   ├── hooks/
+│   │   └── useFormularioCep.js  # Hook customizado
+│   ├── utils/
+│   │   └── utils.js        # Funções utilitárias
+│   ├── App.jsx             # Componente principal
+│   ├── App.css             # Estilos globais
+│   └── main.jsx            # Ponto de entrada
+├── public/
+├── index.html
+├── package.json
+└── README.md
+
+##  Decisões Técnicas
+
+- **Por que React?**
+ - Componentização facilita reutilização e manutenção
+
+- **Por que Custom Hook?**
+ - Separação de responsabilidades
+ - Lógica reutilizável
+ - Código mais limpo
+
+- **Por que Vite?**
+ - Build otimizado
+ - Configuração mínima
+
+ ##  Validações Implementadas
+
+- **CEP**
+ - Formato obrigatório (8 dígitos)
+ - Validação em tempo real
+ - Mensagem de erro se não encontrado
+
+- **Número**
+ - Campo obrigatório
+ - Mínimo 1 caractere
