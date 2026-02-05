@@ -13,7 +13,7 @@ import "./index.css"
  * @param {string} placeholder - Texto placeholder
  */
 
-function Input({ label, id, type="text", disabled=false, required=false, value, onChange, placeholder }) {
+function Input({ label, id, type="text", disabled=false, required=false, value, onChange, placeholder, erro }) {
 	return(
 		<div className="input-group">
 			<label htmlFor={id}>{label}</label>
@@ -26,6 +26,7 @@ function Input({ label, id, type="text", disabled=false, required=false, value, 
 				onChange={onChange}
 				placeholder={placeholder}
 			/>
+			{erro && <span className="mensagem-erro">* {erro}</span>}
 		</div>
 	)
 }

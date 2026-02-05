@@ -14,10 +14,36 @@ function App() {
 		complemento: "",
 	})
 
+	const [erros, setErros] = useState({})
+
 	useEffect(() => {
 		// Busca automaticamente quando o CEP tiver 8 dígitos
   		const buscarCEPAutomatico = async () => {
-			if(formData.cep.replace(/\D/g, '').length === 8) {
+			const cepLimpo = formData.cep.replace(/\D/g, '')
+
+			// Valida CEP incompleto (enquanto digita)
+    		if (cepLimpo.length > 0 && cepLimpo.length < 8) {
+      			setErros(prev => ({
+        			...prev,
+        			cep: "CEP inválido"
+      			}))
+      			return
+    		}
+
+			// Limpa erro se estiver vazio ou completo
+			if (cepLimpo.length === 0) {
+				setErros(prev => ({
+					...prev,
+					cep: undefined
+				}))
+			}
+			
+			if(cepLimpo.length === 8) {
+				setErros(prev => ({
+					...prev,
+					cep: undefined
+				}))
+
 				try { 
 					const dados = await buscarCEP(formData.cep)
 					setFormData(prev => ({
@@ -28,6 +54,10 @@ function App() {
 					}))
 				} catch (erro) {
 					console.error(erro.message)
+        			setErros(prev => ({
+          				...prev,
+          				cep: "CEP inválido"
+        			}))
 				}
 			}
   		}
@@ -43,10 +73,10 @@ function App() {
 		if(campo === "cep") {
 			valor = formatarCEP(valor)
 		}
-		setFormData({
-			...formData, // Mantem o valor dos demais campos
+		setFormData(prev => ({
+			...prev, // Mantem o valor dos demais campos
 			[campo]: valor // Atualiza o campo especifico
-		})
+		}))
 	}
 
 
@@ -62,6 +92,7 @@ function App() {
 				value={formData.cep}
 				onChange={(e) => handleChange("cep", e.target.value)}
 				placeholder="00000-000"
+				erro={erros.cep}
 			/>
 
 			<Input
@@ -91,6 +122,7 @@ function App() {
 				required
 				value={formData.numero}
 				onChange={(e) => handleChange("numero", e.target.value)}
+				erro={erros.numero}
 			/>
 
 			<Input
@@ -101,7 +133,7 @@ function App() {
 				placeholder="Ex.: Ao lado do posto."
 			/>
 
-			<button  type="button">Buscar CEP</button>
+			<button  type="button">Enviar Formulário</button>
 		</form>
 	  </div>
   )
